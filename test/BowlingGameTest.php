@@ -6,15 +6,24 @@ use PHPUnit\Framework\TestCase;
 class BowlingGameTest extends TestCase
 {
     /**
+     * @var BowlingGame
+     */
+    private $game;
+
+    protected function setUp()
+    {
+        $this->game = new BowlingGame();
+    }
+
+    /**
      * @test
      */
     public function 全ての投球がガタ―()
     {
-        $game = new BowlingGame();
         for ($i = 1; $i <= 20; $i++) {
-            $game->recordShot(0);
+            $this->game->recordShot(0);
         }
-        $this->assertEquals(0, $game->score);
+        $this->assertEquals(0, $this->game->score);
     }
 
     /**
@@ -22,10 +31,9 @@ class BowlingGameTest extends TestCase
      */
     public function 全ての投球で1ピンたけ倒した()
     {
-        $game = new BowlingGame();
         for ($i = 1; $i <= 20; $i++) {
-            $game->recordShot(1);
+            $this->game->recordShot(1);
         }
-        $this->assertEquals(20, $game->score);
+        $this->assertEquals(20, $this->game->score);
     }
 }
