@@ -112,6 +112,20 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function ダブル後のスペア()
+    {
+        $this->game->recordShot(10); // 10+10+5=25
+        $this->game->recordShot(10); // 10+5+5=20
+        $this->game->recordShot(5);
+        $this->game->recordShot(5); // 5+3=8
+        $this->game->recordShot(3);
+        $this->recordManyShots(13, 0);
+        $this->assertEquals(61, $this->game->score);
+    }
+
+    /**
      * @param int $count
      * @param int $pins
      */
