@@ -72,6 +72,19 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function 連続ストライクすなわちダブル()
+    {
+        $this->game->recordShot(10); // 10+10+3=23
+        $this->game->recordShot(10); // 10+3+1=14
+        $this->game->recordShot(3);
+        $this->game->recordShot(1);
+        $this->recordManyShots(14, 0);
+        $this->assertEquals(41, $this->game->score);
+    }
+
+    /**
      * @param int $count
      * @param int $pins
      */
