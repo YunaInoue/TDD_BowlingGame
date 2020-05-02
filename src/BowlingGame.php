@@ -50,11 +50,10 @@ class BowlingGame
     /**
      * @param int $pins
      */
-    public function calcSpareBonus(int $pins): void
+    private function calcSpareBonus(int $pins): void
     {
         if ($this->spare) { // 前回スペアだった場合ボーナス追加
             $this->score += $pins;
-            $this->spare = false;
         }
         $this->spare = $this->isSpare($pins);
     }
@@ -63,7 +62,7 @@ class BowlingGame
      * @param int $pins
      * @return bool
      */
-    public function isSpare(int $pins): bool
+    private function isSpare(int $pins): bool
     {
         return !$this->isFirstShotInFrame() && $pins + $this->firstShotPins === 10;
     }
@@ -72,7 +71,7 @@ class BowlingGame
      * @param int $pins
      * @return bool
      */
-    public function isStrike(int $pins): bool
+    private function isStrike(int $pins): bool
     {
         return $this->isFirstShotInFrame() && $pins === 10;
     }
@@ -80,7 +79,7 @@ class BowlingGame
     /**
      * @param int $pins
      */
-    public function calcStrikeBonus(int $pins): void
+    private function calcStrikeBonus(int $pins): void
     {
         if ($this->strikeBonusCount > 0) {
             $this->score += $pins;
@@ -94,7 +93,7 @@ class BowlingGame
     /**
      * @param int $pins
      */
-    public function setFirstShotPins(int $pins): void
+    private function setFirstShotPins(int $pins): void
     {
         if (!$this->isFirstShotInFrame() || $this->isStrike($pins)) {
             $this->firstShotPins = null;
