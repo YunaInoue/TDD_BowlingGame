@@ -34,16 +34,8 @@ class BowlingGame
     public function recordShot(int $pins): void
     {
         $this->score += $pins;
-        if ($this->strikeBonusCount > 0) {
-            $this->score += $pins;
-            $this->strikeBonusCount -= 1;
-        }
-        // 前回スペアだった場合
         $this->calcSpareBonus($pins);
-        if ($this->isStrike($pins)) {
-            $this->strikeBonusCount += 2;
-            $this->firstShotPins = null;
-        }
+        $this->calcStrikeBonus($pins);
         // 各フレームの1投目の場合
         if ($this->isFirstShotInFrame()) {
             $this->firstShotPins = $pins;
@@ -88,5 +80,19 @@ class BowlingGame
     public function isStrike(int $pins): bool
     {
         return $this->isFirstShotInFrame() && $pins === 10;
+    }
+
+    /**
+     * @param int $pins
+     */
+    public function calcStrikeBonus(int $pins): void
+    {
+        if ($this->strikeBonusCount > 0) {
+            $this->score += $pins;
+            $this->strikeBonusCount -= 1;
+        }
+        if ($this->isStrike($pins)) {
+            $this->strikeBonusCount += 2;
+        }
     }
 }
