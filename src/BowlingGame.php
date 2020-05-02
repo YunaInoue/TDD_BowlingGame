@@ -19,7 +19,10 @@ class BowlingGame
      */
     public function __construct()
     {
-
+        $this->score = 0;
+        $this->firstShotPins = null;
+        $this->spare = false;
+        $this->strikeBonusCount = 0;
     }
 
     /**
