@@ -59,6 +59,19 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function ストライクを取ると次の2投分のピン数を加算()
+    {
+        $this->game->recordShot(10); // 10+3+3=16
+        $this->game->recordShot(3);
+        $this->game->recordShot(3);
+        $this->game->recordShot(1);
+        $this->recordManyShots(16, 0);
+        $this->assertEquals(23, $this->game->score);
+    }
+
+    /**
      * @param int $count
      * @param int $pins
      */
