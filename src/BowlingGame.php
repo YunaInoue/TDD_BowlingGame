@@ -59,21 +59,9 @@ class BowlingGame
      */
     private function calcStrikeBonus(int $pins): void
     {
-        if ($this->strikeBonusCount > 0) {
-            $this->score += $pins;
-            $this->strikeBonusCount -= 1;
-        }
-        if ($this->doubleBonusCount > 0) {
-            $this->score += $pins;
-            $this->doubleBonusCount -= 1;
-        }
-        if ($this->isDouble($pins)) {
-            $this->doubleBonusCount = 2;
-            return;
-        }
-        if ($this->isStrike($pins)) {
-            $this->strikeBonusCount = 2;
-        }
+        $this->addStrikeBonus($pins);
+        $this->addDoubleBonus($pins);
+        $this->recognizeStrikeBonus($pins);
     }
 
     /**
@@ -94,6 +82,43 @@ class BowlingGame
     private function isFirstShotInFrame(): bool
     {
         return is_null($this->firstShotPins);
+    }
+
+
+    /**
+     * @param int $pins
+     */
+    private function addStrikeBonus(int $pins): void
+    {
+        if ($this->strikeBonusCount > 0) {
+            $this->score += $pins;
+            $this->strikeBonusCount -= 1;
+        }
+    }
+
+    /**
+     * @param int $pins
+     */
+    private function addDoubleBonus(int $pins): void
+    {
+        if ($this->doubleBonusCount > 0) {
+            $this->score += $pins;
+            $this->doubleBonusCount -= 1;
+        }
+    }
+
+    /**
+     * @param int $pins
+     */
+    private function recognizeStrikeBonus(int $pins): void
+    {
+        if ($this->isDouble($pins)) {
+            $this->doubleBonusCount = 2;
+            return;
+        }
+        if ($this->isStrike($pins)) {
+            $this->strikeBonusCount = 2;
+        }
     }
 
     /**
