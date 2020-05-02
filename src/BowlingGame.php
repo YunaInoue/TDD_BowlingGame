@@ -38,12 +38,10 @@ class BowlingGame
             $this->score += $pins;
             $this->strikeBonusCount -= 1;
         }
+        // 前回スペアだった場合
+        $this->calcSpareBonus($pins);
         // 各フレームの1投目の場合
         if ($this->isFirstShotInFrame()) {
-            // 前回スペアだった場合
-            if ($this->spare) {
-                $this->score += $pins;
-            }
             if ($pins === 10) {
                 $this->strikeBonusCount += 2;
                 $this->firstShotPins = null;
@@ -51,8 +49,6 @@ class BowlingGame
             $this->firstShotPins = $pins;
             return;
         }
-        // 各フレームの2投目の場合
-        $this->spare = $this->isSpare($pins);
         $this->firstShotPins = null;
     }
 
@@ -66,10 +62,22 @@ class BowlingGame
 
     /**
      * @param int $pins
+     */
+    public function calcSpareBonus(int $pins): void
+    {
+        if ($this->spare) { // 前回スペアだった場合ボーナス追加
+            $this->score += $pins;
+            $this->spare = false;
+        }
+        $this->spare = $this->isSpare($pins);
+    }
+
+    /**
+     * @param int $pins
      * @return bool
      */
     public function isSpare(int $pins): bool
     {
-        return $pins + $this->firstShotPins === 10;
+        return !$this->isFirstShotInFrame() && $pins + $this->firstShotPins === 10;
     }
 }
