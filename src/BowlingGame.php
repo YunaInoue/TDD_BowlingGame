@@ -17,6 +17,9 @@ class BowlingGame
     /** @var int ストライクボーナスカウント */
     public $strikeBonusCount;
 
+    /** @var int ダブルボーナスカウント */
+    public $doubleBonusCount;
+
     /**
      * BowlingGame constructor.
      */
@@ -40,14 +43,6 @@ class BowlingGame
     }
 
     /**
-     * @return bool
-     */
-    private function isFirstShotInFrame(): bool
-    {
-        return is_null($this->firstShotPins);
-    }
-
-    /**
      * @param int $pins
      */
     private function calcSpareBonus(int $pins): void
@@ -56,6 +51,49 @@ class BowlingGame
             $this->score += $pins;
         }
         $this->spare = $this->isSpare($pins);
+    }
+
+
+    /**
+     * @param int $pins
+     */
+    private function calcStrikeBonus(int $pins): void
+    {
+        if ($this->strikeBonusCount > 0) {
+            $this->score += $pins;
+            $this->strikeBonusCount -= 1;
+        }
+        if ($this->doubleBonusCount > 0) {
+            $this->score += $pins;
+            $this->doubleBonusCount -= 1;
+        }
+        if ($this->isDouble($pins)) {
+            $this->doubleBonusCount = 2;
+            return;
+        }
+        if ($this->isStrike($pins)) {
+            $this->strikeBonusCount = 2;
+        }
+    }
+
+    /**
+     * @param int $pins
+     */
+    private function setFirstShotPins(int $pins): void
+    {
+        if (!$this->isFirstShotInFrame() || $this->isStrike($pins)) {
+            $this->firstShotPins = null;
+            return;
+        }
+        $this->firstShotPins = $pins;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isFirstShotInFrame(): bool
+    {
+        return is_null($this->firstShotPins);
     }
 
     /**
@@ -78,27 +116,10 @@ class BowlingGame
 
     /**
      * @param int $pins
+     * @return bool
      */
-    private function calcStrikeBonus(int $pins): void
+    private function isDouble(int $pins): bool
     {
-        if ($this->strikeBonusCount > 0) {
-            $this->score += $pins;
-            $this->strikeBonusCount -= 1;
-        }
-        if ($this->isStrike($pins)) {
-            $this->strikeBonusCount += 2;
-        }
-    }
-
-    /**
-     * @param int $pins
-     */
-    private function setFirstShotPins(int $pins): void
-    {
-        if (!$this->isFirstShotInFrame() || $this->isStrike($pins)) {
-            $this->firstShotPins = null;
-            return;
-        }
-        $this->firstShotPins = $pins;
+        return $this->strikeBonusCount > 0 && $pins === 10;
     }
 }
