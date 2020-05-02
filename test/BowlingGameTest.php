@@ -46,6 +46,19 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function 直前の等級との合計が10ピンでもフレーム違いはスペアではない()
+    {
+        $this->game->recordShot(2);
+        $this->game->recordShot(5);
+        $this->game->recordShot(5); // 前の投球との合計は10だけどスペアではない
+        $this->game->recordShot(1);
+        $this->recordManyShots(16, 0);
+        $this->assertEquals(13, $this->game->score);
+    }
+
+    /**
      * @param int $count
      * @param int $pins
      */
