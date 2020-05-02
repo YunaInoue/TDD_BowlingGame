@@ -14,6 +14,9 @@ class BowlingGame
     /** @var bool スペアフラグ */
     public $spare;
 
+    /** @var int ストライクボーナスカウント */
+    public $strikeBonusCount;
+
     /**
      * BowlingGame constructor.
      */
@@ -31,11 +34,19 @@ class BowlingGame
     public function recordShot(int $pins): void
     {
         $this->score += $pins;
+        if ($this->strikeBonusCount > 0) {
+            $this->score += $pins;
+            $this->strikeBonusCount -= 1;
+        }
         // 各フレームの1投目の場合
         if ($this->isFirstShotInFrame()) {
             // 前回スペアだった場合
             if ($this->spare) {
                 $this->score += $pins;
+            }
+            if ($pins === 10) {
+                $this->strikeBonusCount += 2;
+                $this->firstShotPins = null;
             }
             $this->firstShotPins = $pins;
             return;
