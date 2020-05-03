@@ -5,8 +5,6 @@ namespace myApp;
 
 class BowlingGame
 {
-    /** @var bool スペアフラグ */
-    public $spare;
 
     /** @var int ストライクボーナスカウント */
     public $strikeBonusCount;
@@ -31,7 +29,6 @@ class BowlingGame
      */
     public function __construct()
     {
-        $this->spare = false;
         $this->strikeBonusCount = 0;
         $this->frames = array(new Frame());
         $this->spareFrame = null;
@@ -79,12 +76,11 @@ class BowlingGame
      */
     private function calcSpareBonus(int $pins): void
     {
-        if ($this->spare) { // 前回スペアだった場合ボーナス追加
+        if ($this->spareFrame && $this->spareFrame->needBonus()) {
             $this->spareFrame->addBonus($pins);
             $this->spareFrame = null;
         }
-        $this->spare = end($this->frames)->spare();
-        if ($this->spare) {
+        if (end($this->frames)->spare()) {
             $this->spareFrame = end($this->frames);
         }
     }
