@@ -72,6 +72,6 @@ class Frame
      */
     public function addBonus(int $bonus)
     {
-        $this->bonus = +$bonus;
+        $this->bonus += $bonus;
     }
 }
