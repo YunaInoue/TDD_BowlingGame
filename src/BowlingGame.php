@@ -143,15 +143,6 @@ class BowlingGame
      * @param int $pins
      * @return bool
      */
-//    private function isSpare(int $pins): bool
-//    {
-//        return !$this->isFirstShotInFrame() && $pins + $this->firstShotPins === 10;
-//    }
-
-    /**
-     * @param int $pins
-     * @return bool
-     */
     private function isStrike(int $pins): bool
     {
         return $this->isFirstShotInFrame() && $pins === 10;
