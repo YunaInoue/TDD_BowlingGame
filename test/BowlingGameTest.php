@@ -126,6 +126,15 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function 全ての投球がガターの場合の第1フレームの得点()
+    {
+        $this->recordManyShots(20, 0);
+        $this->assertEquals(0, $this->game->frameScore(1));
+    }
+
+    /**
      * @param int $count
      * @param int $pins
      */
