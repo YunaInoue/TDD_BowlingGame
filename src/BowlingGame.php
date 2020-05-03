@@ -68,7 +68,7 @@ class BowlingGame
         if ($this->spare) { // 前回スペアだった場合ボーナス追加
             $this->score += $pins;
         }
-        $this->spare = $this->isSpare($pins);
+        $this->spare = end($this->frames)->spare();
     }
 
 
@@ -143,10 +143,10 @@ class BowlingGame
      * @param int $pins
      * @return bool
      */
-    private function isSpare(int $pins): bool
-    {
-        return !$this->isFirstShotInFrame() && $pins + $this->firstShotPins === 10;
-    }
+//    private function isSpare(int $pins): bool
+//    {
+//        return !$this->isFirstShotInFrame() && $pins + $this->firstShotPins === 10;
+//    }
 
     /**
      * @param int $pins
