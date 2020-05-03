@@ -27,4 +27,17 @@ class FrameTest extends TestCase
         $frame->recordShot(1);
         $this->assertEquals(2, $frame->score);
     }
+
+    /**
+     * @test
+     */
+    public function ２投するとフレームは完了する()
+    {
+        $frame = new Frame();
+        $frame->recordShot(1);
+        $this->assertFalse($frame->finished());
+        $frame->recordShot(1);
+        $this->assertEquals(2, $frame->score);
+        $this->assertTrue($frame->finished());
+    }
 }
