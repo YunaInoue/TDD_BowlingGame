@@ -26,6 +26,9 @@ class BowlingGame
     /** @var Frame ストライクフレーム */
     public $strikeFrame;
 
+    /** @var Frame ダブルフレーム */
+    public $doubleFrame;
+
     /**
      * BowlingGame constructor.
      */
@@ -37,6 +40,7 @@ class BowlingGame
         $this->frames = array(new Frame());
         $this->spareFrame = null;
         $this->strikeFrame = null;
+        $this->doubleFrame = null;
     }
 
     /**
@@ -109,6 +113,7 @@ class BowlingGame
     {
         if ($this->doubleBonusCount > 0) {
             $this->score += $pins;
+            $this->doubleFrame->addBonus($pins);
             $this->doubleBonusCount -= 1;
         }
     }
@@ -119,6 +124,7 @@ class BowlingGame
     private function recognizeStrikeBonus(int $pins): void
     {
         if ($this->isDouble($pins)) {
+            $this->doubleFrame = end($this->frames);
             $this->doubleBonusCount = 2;
             return;
         }
