@@ -20,6 +20,9 @@ class BowlingGame
     /** @var int ダブルボーナスカウント */
     public $doubleBonusCount;
 
+    /** @var Frame フレーム */
+    public $frame;
+
     /**
      * BowlingGame constructor.
      */
@@ -29,6 +32,7 @@ class BowlingGame
         $this->firstShotPins = null;
         $this->spare = false;
         $this->strikeBonusCount = 0;
+        $this->frame = new Frame();
     }
 
     /**
@@ -37,6 +41,7 @@ class BowlingGame
     public function recordShot(int $pins): void
     {
         $this->score += $pins;
+        $this->frame->recordShot($pins);
         $this->calcSpareBonus($pins);
         $this->calcStrikeBonus($pins);
         $this->setFirstShotPins($pins);
@@ -48,7 +53,7 @@ class BowlingGame
      */
     public function frameScore(int $frameNo): int
     {
-        return 0;
+        return $this->frame->score;
     }
 
     /**
