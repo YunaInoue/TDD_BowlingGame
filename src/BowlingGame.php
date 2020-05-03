@@ -23,6 +23,9 @@ class BowlingGame
     /** @var Frame スペアフレーム */
     public $spareFrame;
 
+    /** @var Frame ストライクフレーム */
+    public $strikeFrame;
+
     /**
      * BowlingGame constructor.
      */
@@ -33,6 +36,7 @@ class BowlingGame
         $this->strikeBonusCount = 0;
         $this->frames = array(new Frame());
         $this->spareFrame = null;
+        $this->strikeFrame = null;
     }
 
     /**
@@ -93,6 +97,7 @@ class BowlingGame
     {
         if ($this->strikeBonusCount > 0) {
             $this->score += $pins;
+            $this->strikeFrame->addBonus($pins);
             $this->strikeBonusCount -= 1;
         }
     }
@@ -118,6 +123,7 @@ class BowlingGame
             return;
         }
         if (end($this->frames)->strike()) {
+            $this->strikeFrame = end($this->frames);
             $this->strikeBonusCount = 2;
         }
     }
