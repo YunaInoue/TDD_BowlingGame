@@ -8,9 +8,6 @@ class BowlingGame
     /** @var int スコア */
     public $score;
 
-    /** @var int フレームの1投球目で倒したピン数 */
-    public $firstShotPins;
-
     /** @var bool スペアフラグ */
     public $spare;
 
@@ -29,7 +26,6 @@ class BowlingGame
     public function __construct()
     {
         $this->score = 0;
-        $this->firstShotPins = null;
         $this->spare = false;
         $this->strikeBonusCount = 0;
         $this->frames = array(new Frame());
@@ -45,7 +41,6 @@ class BowlingGame
         $this->score += $pins;
         $this->calcSpareBonus($pins);
         $this->calcStrikeBonus($pins);
-        $this->setFirstShotPins($pins);
         if ($frame->finished()) {
             array_push($this->frames, new Frame());
         }
@@ -81,27 +76,6 @@ class BowlingGame
         $this->addDoubleBonus($pins);
         $this->recognizeStrikeBonus($pins);
     }
-
-    /**
-     * @param int $pins
-     */
-    private function setFirstShotPins(int $pins): void
-    {
-        if (!$this->isFirstShotInFrame() || end($this->frames)->strike()) {
-            $this->firstShotPins = null;
-            return;
-        }
-        $this->firstShotPins = $pins;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isFirstShotInFrame(): bool
-    {
-        return is_null($this->firstShotPins);
-    }
-
 
     /**
      * @param int $pins
