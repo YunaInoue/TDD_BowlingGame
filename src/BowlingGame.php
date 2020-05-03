@@ -5,17 +5,14 @@ namespace myApp;
 
 class BowlingGame
 {
-    /** @var array|Frame[] フレーム */
+    /** @var array|Frame[] フレーム配列 */
     public $frames;
 
     /** @var Frame スペアフレーム */
     public $spareFrame;
 
-    /** @var Frame ストライクフレーム */
-    public $strikeFrame;
-
-    /** @var Frame ダブルフレーム */
-    public $doubleFrame;
+    /** @var array|Frame[] ストライクフレーム配列 */
+    public $strikeFrames;
 
     /**
      * BowlingGame constructor.
@@ -24,8 +21,7 @@ class BowlingGame
     {
         $this->frames = array(new Frame());
         $this->spareFrame = null;
-        $this->strikeFrame = null;
-        $this->doubleFrame = null;
+        $this->strikeFrames = array();
     }
 
     /**
@@ -83,9 +79,8 @@ class BowlingGame
     private function calcStrikeBonus(int $pins): void
     {
         $this->addStrikeBonus($pins);
-        $this->addDoubleBonus($pins);
         if (end($this->frames)->strike()) {
-            $this->recognizeStrikeBonus();
+            array_push($this->strikeFrames, end($this->frames));
         }
     }
 
@@ -94,27 +89,10 @@ class BowlingGame
      */
     private function addStrikeBonus(int $pins): void
     {
-        if ($this->strikeFrame && $this->strikeFrame->needBonus()) {
-            $this->strikeFrame->addBonus($pins);
-        }
-    }
-
-    /**
-     * @param int $pins
-     */
-    private function addDoubleBonus(int $pins): void
-    {
-        if ($this->doubleFrame && $this->doubleFrame->needBonus()) {
-            $this->doubleFrame->addBonus($pins);
-        }
-    }
-
-    private function recognizeStrikeBonus(): void
-    {
-        if (!$this->strikeFrame || !$this->strikeFrame->needBonus()) {
-            $this->strikeFrame = end($this->frames);
-        } else {
-            $this->doubleFrame = end($this->frames);
+        foreach ($this->strikeFrames as $strikeFrame) {
+            if ($strikeFrame && $strikeFrame->needBonus()) {
+                $strikeFrame->addBonus($pins);
+            }
         }
     }
 }
