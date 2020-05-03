@@ -74,4 +74,12 @@ class Frame
     {
         $this->bonus += $bonus;
     }
+
+    /**
+     * @return bool
+     */
+    public function needBonus(): bool
+    {
+        return $this->spare() || $this->strike();
+    }
 }
