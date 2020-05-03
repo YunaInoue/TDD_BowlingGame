@@ -135,6 +135,17 @@ class BowlingGameTest extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function 全ての投球が1ピンだと全フレーム2点()
+    {
+        $this->recordManyShots(20, 1);
+        for ($frameNo = 1; $frameNo <= 20; $frameNo++) {
+            $this->assertEquals(2, $this->game->frameScore($frameNo));
+        }
+    }
+
+    /**
      * @param int $count
      * @param int $pins
      */
