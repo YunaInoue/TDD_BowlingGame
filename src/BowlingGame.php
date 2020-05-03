@@ -20,6 +20,9 @@ class BowlingGame
     /** @var array|Frame[] フレーム */
     public $frames;
 
+    /** @var Frame スペアフレーム */
+    public $spareFrame;
+
     /**
      * BowlingGame constructor.
      */
@@ -29,6 +32,7 @@ class BowlingGame
         $this->spare = false;
         $this->strikeBonusCount = 0;
         $this->frames = array(new Frame());
+        $this->spareFrame = null;
     }
 
     /**
@@ -52,7 +56,7 @@ class BowlingGame
      */
     public function frameScore(int $frameNo): int
     {
-        return $this->frames[$frameNo - 1]->score;
+        return $this->frames[$frameNo - 1]->getScore();
     }
 
     /**
@@ -62,8 +66,13 @@ class BowlingGame
     {
         if ($this->spare) { // 前回スペアだった場合ボーナス追加
             $this->score += $pins;
+            $this->spareFrame->addBonus($pins);
+            $this->spareFrame = null;
         }
         $this->spare = end($this->frames)->spare();
+        if ($this->spare) {
+            $this->spareFrame = end($this->frames);
+        }
     }
 
 
