@@ -46,4 +46,12 @@ class Frame
     {
         return $this->score === 10 && $this->shotNo >= 2;
     }
+
+    /**
+     * @return bool
+     */
+    public function strike(): bool
+    {
+        return $this->score === 10 && $this->shotNo === 1;
+    }
 }
