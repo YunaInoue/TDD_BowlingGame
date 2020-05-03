@@ -85,4 +85,15 @@ class FrameTest extends TestCase
         $frame->addBonus(5);
         $this->assertEquals(15, $frame->getScore()); // ストライク
     }
+
+    /**
+     * @test
+     */
+    public function オープンフレームにはボーナス不要()
+    {
+        $frame = new Frame();
+        $frame->recordShot(3);
+        $frame->recordShot(3);
+        $this->assertFalse($frame->needBonus());
+    }
 }
