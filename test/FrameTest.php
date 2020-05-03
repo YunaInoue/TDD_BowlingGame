@@ -62,4 +62,16 @@ class FrameTest extends TestCase
         $frame->recordShot(5);
         $this->assertTrue($frame->spare()); // 10ピンになったのでスペア
     }
+
+
+    /**
+     * @test
+     */
+    public function １投目で１０ピン倒すとストライク()
+    {
+        $frame = new Frame();
+        $this->assertFalse($frame->strike());    // 投球前はストライクではない
+        $frame->recordShot(10);
+        $this->assertTrue($frame->strike()); // ストライク
+    }
 }
