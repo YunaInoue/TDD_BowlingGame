@@ -87,7 +87,7 @@ class BowlingGame
      */
     private function setFirstShotPins(int $pins): void
     {
-        if (!$this->isFirstShotInFrame() || $this->isStrike($pins)) {
+        if (!$this->isFirstShotInFrame() || end($this->frames)->strike()) {
             $this->firstShotPins = null;
             return;
         }
@@ -134,18 +134,9 @@ class BowlingGame
             $this->doubleBonusCount = 2;
             return;
         }
-        if ($this->isStrike($pins)) {
+        if (end($this->frames)->strike()) {
             $this->strikeBonusCount = 2;
         }
-    }
-
-    /**
-     * @param int $pins
-     * @return bool
-     */
-    private function isStrike(int $pins): bool
-    {
-        return $this->isFirstShotInFrame() && $pins === 10;
     }
 
     /**
