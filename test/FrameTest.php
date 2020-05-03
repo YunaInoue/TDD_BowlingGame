@@ -14,7 +14,7 @@ class FrameTest extends TestCase
         $frame = new Frame();
         $frame->recordShot(0);
         $frame->recordShot(0);
-        $this->assertEquals(0, $frame->score);
+        $this->assertEquals(0, $frame->getScore());
     }
 
     /**
@@ -25,7 +25,7 @@ class FrameTest extends TestCase
         $frame = new Frame();
         $frame->recordShot(1);
         $frame->recordShot(1);
-        $this->assertEquals(2, $frame->score);
+        $this->assertEquals(2, $frame->getScore());
     }
 
     /**
@@ -83,6 +83,6 @@ class FrameTest extends TestCase
         $frame->recordShot(5);
         $frame->recordShot(5);
         $frame->addBonus(5);
-        $this->assertEquals(15, $frame->score()); // ストライク
+        $this->assertEquals(15, $frame->getScore()); // ストライク
     }
 }

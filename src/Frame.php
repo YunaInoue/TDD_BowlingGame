@@ -36,6 +36,14 @@ class Frame
     }
 
     /**
+     * @return int
+     */
+    public function getScore(): int
+    {
+        return $this->score + $this->bonus;
+    }
+
+    /**
      * @return bool
      */
     public function finished(): bool
