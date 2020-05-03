@@ -84,6 +84,8 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(1);
         $this->recordManyShots(14, 0);
         $this->assertEquals(41, $this->game->score);
+        $this->assertEquals(23, $this->game->frameScore(1));
+        $this->assertEquals(14, $this->game->frameScore(2));
     }
 
     /**
