@@ -109,4 +109,17 @@ class FrameTest extends TestCase
         $frame->addBonus(5);
         $this->assertFalse($frame->needBonus()); // ボーナス付与後
     }
+
+    /**
+     * @test
+     */
+    public function ストライクのボーナスは2投分で完了()
+    {
+        $frame = new Frame();
+        $frame->recordShot(10);
+        $frame->addBonus(5);
+        $this->assertTrue($frame->needBonus()); // ボーナス付与1回後
+        $frame->addBonus(5);
+        $this->assertFalse($frame->needBonus()); // ボーナス付与2回後
+    }
 }
