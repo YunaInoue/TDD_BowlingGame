@@ -16,6 +16,9 @@ class Frame
     /** @var int ボーナス */
     public $bonus;
 
+    /** @var int ボーナス残数 */
+    public $bonusCount;
+
     /**
      * Frame constructor.
      */
@@ -24,6 +27,7 @@ class Frame
         $this->score = 0;
         $this->shotNo = 0;
         $this->bonus = 0;
+        $this->bonusCount = 0;
     }
 
     /**
@@ -33,6 +37,11 @@ class Frame
     {
         $this->score += $pins;
         $this->shotNo += 1;
+        if ($this->spare()) {
+            $this->bonusCount = 1;
+        } else if ($this->strike()) {
+            $this->bonusCount = 2;
+        }
     }
 
     /**
@@ -73,6 +82,7 @@ class Frame
     public function addBonus(int $bonus)
     {
         $this->bonus += $bonus;
+        $this->bonusCount -= 1;
     }
 
     /**
@@ -80,6 +90,6 @@ class Frame
      */
     public function needBonus(): bool
     {
-        return $this->spare() || $this->strike();
+        return $this->bonusCount > 0;
     }
 }
