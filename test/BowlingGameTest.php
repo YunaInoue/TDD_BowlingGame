@@ -49,7 +49,7 @@ class BowlingGameTest extends TestCase
     /**
      * @test
      */
-    public function 直前の等級との合計が10ピンでもフレーム違いはスペアではない()
+    public function 直前の投球との合計が10ピンでもフレーム違いはスペアではない()
     {
         $this->game->recordShot(2);
         $this->game->recordShot(5);
