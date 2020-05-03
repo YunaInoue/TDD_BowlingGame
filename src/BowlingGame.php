@@ -59,6 +59,18 @@ class BowlingGame
     }
 
     /**
+     * @return int
+     */
+    public function getScore(): int
+    {
+        $score = 0;
+        foreach ($this->frames as $frame) {
+            $score += $frame->getScore();
+        }
+        return $score;
+    }
+
+    /**
      * @param int $frameNo
      * @return int
      */

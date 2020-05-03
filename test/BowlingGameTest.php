@@ -21,7 +21,7 @@ class BowlingGameTest extends TestCase
     public function 全ての投球がガタ―()
     {
         $this->recordManyShots(20, 0);
-        $this->assertEquals(0, $this->game->score);
+        $this->assertEquals(0, $this->game->getScore());
     }
 
     /**
@@ -30,7 +30,7 @@ class BowlingGameTest extends TestCase
     public function 全ての投球で1ピンたけ倒した()
     {
         $this->recordManyShots(20, 1);
-        $this->assertEquals(20, $this->game->score);
+        $this->assertEquals(20, $this->game->getScore());
     }
 
     /**
@@ -42,7 +42,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(7); // 10+4=14
         $this->game->recordShot(4);
         $this->recordManyShots(17, 0);
-        $this->assertEquals(18, $this->game->score);
+        $this->assertEquals(18, $this->game->getScore());
         $this->assertEquals(14, $this->game->frameScore(1));
     }
 
@@ -56,7 +56,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(5); // 前の投球との合計は10だけどスペアではない
         $this->game->recordShot(1);
         $this->recordManyShots(16, 0);
-        $this->assertEquals(13, $this->game->score);
+        $this->assertEquals(13, $this->game->getScore());
     }
 
     /**
@@ -69,7 +69,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(3);
         $this->game->recordShot(1);
         $this->recordManyShots(16, 0);
-        $this->assertEquals(23, $this->game->score);
+        $this->assertEquals(23, $this->game->getScore());
         $this->assertEquals(16, $this->game->frameScore(1));
     }
 
@@ -83,7 +83,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(3);
         $this->game->recordShot(1);
         $this->recordManyShots(14, 0);
-        $this->assertEquals(41, $this->game->score);
+        $this->assertEquals(41, $this->game->getScore());
         $this->assertEquals(23, $this->game->frameScore(1));
         $this->assertEquals(14, $this->game->frameScore(2));
     }
@@ -99,7 +99,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(3);
         $this->game->recordShot(1);
         $this->recordManyShots(14, 0);
-        $this->assertEquals(71, $this->game->score);
+        $this->assertEquals(71, $this->game->getScore());
     }
 
     /**
@@ -112,7 +112,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(5); // 5+3=8
         $this->game->recordShot(3);
         $this->recordManyShots(15, 0);
-        $this->assertEquals(36, $this->game->score);
+        $this->assertEquals(36, $this->game->getScore());
     }
 
     /**
@@ -126,7 +126,7 @@ class BowlingGameTest extends TestCase
         $this->game->recordShot(5); // 5+3=8
         $this->game->recordShot(3);
         $this->recordManyShots(13, 0);
-        $this->assertEquals(61, $this->game->score);
+        $this->assertEquals(61, $this->game->getScore());
     }
 
     /**
