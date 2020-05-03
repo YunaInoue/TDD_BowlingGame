@@ -40,4 +40,14 @@ class FrameTest extends TestCase
         $this->assertEquals(2, $frame->score);
         $this->assertTrue($frame->finished());
     }
+
+    /**
+     * @test
+     */
+    public function １０ピン倒した時点でフレームを完了する()
+    {
+        $frame = new Frame();
+        $frame->recordShot(10);
+        $this->assertTrue($frame->finished());
+    }
 }
