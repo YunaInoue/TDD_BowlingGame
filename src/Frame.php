@@ -36,6 +36,6 @@ class Frame
      */
     public function finished(): bool
     {
-        return $this->shotNo === 2;
+        return $this->score >= 10 || $this->shotNo === 2;
     }
 }
