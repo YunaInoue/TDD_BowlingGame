@@ -50,4 +50,16 @@ class FrameTest extends TestCase
         $frame->recordShot(10);
         $this->assertTrue($frame->finished());
     }
+
+    /**
+     * @test
+     */
+    public function ２投目で１０ピン倒すとスぺア()
+    {
+        $frame = new Frame();
+        $frame->recordShot(5);
+        $this->assertFalse($frame->spare());    // スペアではない
+        $frame->recordShot(5);
+        $this->assertTrue($frame->spare()); // 10ピンになったのでスペア
+    }
 }
