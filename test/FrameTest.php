@@ -63,7 +63,6 @@ class FrameTest extends TestCase
         $this->assertTrue($frame->spare()); // 10ピンになったのでスペア
     }
 
-
     /**
      * @test
      */
@@ -73,5 +72,17 @@ class FrameTest extends TestCase
         $this->assertFalse($frame->strike());    // 投球前はストライクではない
         $frame->recordShot(10);
         $this->assertTrue($frame->strike()); // ストライク
+    }
+
+    /**
+     * @test
+     */
+    public function ボーナス点を加算する()
+    {
+        $frame = new Frame();
+        $frame->recordShot(5);
+        $frame->recordShot(5);
+        $frame->addBonus(5);
+        $this->assertEquals(15, $frame->score()); // ストライク
     }
 }
