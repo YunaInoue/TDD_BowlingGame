@@ -13,6 +13,9 @@ class Frame
     /** @var int 投球数 */
     public $shotNo;
 
+    /** @var int ボーナス */
+    public $bonus;
+
     /**
      * Frame constructor.
      */
@@ -20,6 +23,7 @@ class Frame
     {
         $this->score = 0;
         $this->shotNo = 0;
+        $this->bonus = 0;
     }
 
     /**
@@ -53,5 +57,13 @@ class Frame
     public function strike(): bool
     {
         return $this->score === 10 && $this->shotNo === 1;
+    }
+
+    /**
+     * @param int $bonus
+     */
+    public function addBonus(int $bonus)
+    {
+        $this->bonus = +$bonus;
     }
 }
