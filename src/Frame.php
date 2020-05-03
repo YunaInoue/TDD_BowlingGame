@@ -36,6 +36,14 @@ class Frame
      */
     public function finished(): bool
     {
-        return $this->score >= 10 || $this->shotNo === 2;
+        return $this->score >= 10 || $this->shotNo >= 2;
+    }
+
+    /**
+     * @return bool
+     */
+    public function spare(): bool
+    {
+        return $this->score === 10 && $this->shotNo >= 2;
     }
 }
