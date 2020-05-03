@@ -5,13 +5,6 @@ namespace myApp;
 
 class BowlingGame
 {
-
-    /** @var int ストライクボーナスカウント */
-    public $strikeBonusCount;
-
-    /** @var int ダブルボーナスカウント */
-    public $doubleBonusCount;
-
     /** @var array|Frame[] フレーム */
     public $frames;
 
@@ -29,7 +22,6 @@ class BowlingGame
      */
     public function __construct()
     {
-        $this->strikeBonusCount = 0;
         $this->frames = array(new Frame());
         $this->spareFrame = null;
         $this->strikeFrame = null;
@@ -85,7 +77,6 @@ class BowlingGame
         }
     }
 
-
     /**
      * @param int $pins
      */
@@ -93,7 +84,9 @@ class BowlingGame
     {
         $this->addStrikeBonus($pins);
         $this->addDoubleBonus($pins);
-        $this->recognizeStrikeBonus($pins);
+        if (end($this->frames)->strike()) {
+            $this->recognizeStrikeBonus();
+        }
     }
 
     /**
@@ -101,9 +94,8 @@ class BowlingGame
      */
     private function addStrikeBonus(int $pins): void
     {
-        if ($this->strikeBonusCount > 0) {
+        if ($this->strikeFrame && $this->strikeFrame->needBonus()) {
             $this->strikeFrame->addBonus($pins);
-            $this->strikeBonusCount -= 1;
         }
     }
 
@@ -112,34 +104,17 @@ class BowlingGame
      */
     private function addDoubleBonus(int $pins): void
     {
-        if ($this->doubleBonusCount > 0) {
+        if ($this->doubleFrame && $this->doubleFrame->needBonus()) {
             $this->doubleFrame->addBonus($pins);
-            $this->doubleBonusCount -= 1;
         }
     }
 
-    /**
-     * @param int $pins
-     */
-    private function recognizeStrikeBonus(int $pins): void
+    private function recognizeStrikeBonus(): void
     {
-        if ($this->isDouble($pins)) {
-            $this->doubleFrame = end($this->frames);
-            $this->doubleBonusCount = 2;
-            return;
-        }
-        if (end($this->frames)->strike()) {
+        if (!$this->strikeFrame || !$this->strikeFrame->needBonus()) {
             $this->strikeFrame = end($this->frames);
-            $this->strikeBonusCount = 2;
+        } else {
+            $this->doubleFrame = end($this->frames);
         }
-    }
-
-    /**
-     * @param int $pins
-     * @return bool
-     */
-    private function isDouble(int $pins): bool
-    {
-        return $this->strikeBonusCount > 0 && $pins === 10;
     }
 }
