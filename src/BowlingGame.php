@@ -43,6 +43,15 @@ class BowlingGame
     }
 
     /**
+     * @param int $frameNo
+     * @return int
+     */
+    public function frameScore(int $frameNo): int
+    {
+        return 0;
+    }
+
+    /**
      * @param int $pins
      */
     private function calcSpareBonus(int $pins): void
